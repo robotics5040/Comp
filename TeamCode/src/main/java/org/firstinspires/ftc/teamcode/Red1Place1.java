@@ -100,7 +100,7 @@ public class Red1Place1 extends AutoPull {
                 target = 52;
                 break;
             case (3):
-                target = 60;
+                target = 69.5;
                 break;
             default:
                 target = 52;

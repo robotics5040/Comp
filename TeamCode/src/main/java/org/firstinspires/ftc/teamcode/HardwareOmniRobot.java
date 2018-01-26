@@ -41,7 +41,7 @@ public class HardwareOmniRobot
 
     ModernRoboticsI2cRangeSensor ultra_backMR, ultra_backMR2;
 
-    public final int GRABBER_AUTOPOS = 1300;
+    public final int GRABBER_AUTOPOS = 850;
     public final double JKUP = 0.8;
 
     /* Public OpMode members. */
@@ -169,7 +169,7 @@ public class HardwareOmniRobot
         jewelGrab.setPosition(0.19);
         dumper.setPower(0);
         relicClaw.setPosition(0.5);
-        glyphStop.setPosition(1);
+        glyphStop.setPosition(0.6);
         relicWrist.setPosition(0.94);
         relicStopper.setPosition(0.96);
         flexServo.setPosition(0.196);        //out to 90 -- 0.82

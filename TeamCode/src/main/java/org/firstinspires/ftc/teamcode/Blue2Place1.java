@@ -103,7 +103,7 @@ public class Blue2Place1 extends AutoPull {
                 target = 29;
                 break;
             case (3):
-                target = 37;
+                target = 37.5;
                 break;
             default:
                 target = 29;
