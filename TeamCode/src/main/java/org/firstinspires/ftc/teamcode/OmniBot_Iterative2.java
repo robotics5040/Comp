@@ -311,7 +311,7 @@ public class OmniBot_Iterative2 extends OpMode{
             robot.dumper.setPower(0.5);
             robot.dumper.setTargetPosition(480);
         }
-        else if(right_trigger2 > 0.3) {
+        /*else if(right_trigger2 > 0.3) {
             robot.dumper.setPower(1.0);
             robot.dumper.setTargetPosition(-450);
             if(robot.dumper.getCurrentPosition() > -400 && runtime.seconds() > 2.0) {
@@ -323,7 +323,7 @@ public class OmniBot_Iterative2 extends OpMode{
                 robot.dumper.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
                 robot.dumper.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             }
-        }
+        }*/
         else {
             robot.dumper.setTargetPosition(0);
         }
