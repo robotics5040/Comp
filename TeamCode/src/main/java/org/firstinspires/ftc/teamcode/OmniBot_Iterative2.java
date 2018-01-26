@@ -342,8 +342,8 @@ public class OmniBot_Iterative2 extends OpMode{
         }
         //part way open when not pressing a button
         else {
-            robot.claw1.setPosition(0.7);
-            robot.claw2.setPosition(0.3);
+            robot.claw1.setPosition(0.65);
+            robot.claw2.setPosition(0.35);
         }
 
         int relicMotorPosition = robot.relicMotor.getCurrentPosition();
