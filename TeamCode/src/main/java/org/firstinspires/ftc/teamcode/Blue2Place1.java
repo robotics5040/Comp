@@ -90,6 +90,10 @@ public class Blue2Place1 extends AutoPull {
         //waitForStart();
         runtime2.reset();
 
+        robot.jkcolor.enableLed(true);
+        robot.jkcolor2.enableLed(true);
+        robot.jknock.setPosition(0.13);
+
         RobotLog.ii("5040MSG","Run vufloria");
         //int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         int choosen = Vuforia(cameraMonitorViewId, "blue",vuforia);
@@ -103,7 +107,7 @@ public class Blue2Place1 extends AutoPull {
                 target = 29;
                 break;
             case (3):
-                target = 37.5;
+                target = 37;
                 break;
             default:
                 target = 29;
@@ -184,9 +188,9 @@ public class Blue2Place1 extends AutoPull {
         runtime.reset();
         while (robot.dumper.getCurrentPosition() <= 470 && opModeIsActive() && runtime2.seconds() < 28 && runtime.seconds() < 2.0) {
             robot.dumper.setTargetPosition(480);
-            onmiDrive(robot, 0,.26,0);
+            //onmiDrive(robot, 0,.26,0);
         }
-        DriveFor(robot,0.6, 0.3, 0.0, 0.0);
+        DriveFor(robot,0.5, 0.4, 0.0, 0.0);
 
         while (robot.dumper.getCurrentPosition() >= 5 && opModeIsActive()) {
             robot.dumper.setTargetPosition(0);

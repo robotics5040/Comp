@@ -39,9 +39,9 @@ import com.qualcomm.robotcore.util.RobotLog;
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 
-@Autonomous(name="Omnibot: Red2Place1", group="Omnibot")
+@Autonomous(name="Omnibot: Red1Place2", group="Omnibot")
 //@Disabled
-public class Red2Place1 extends AutoPull {
+public class Red1Place2 extends AutoPull {
 
     HardwareOmniRobot robot   = new HardwareOmniRobot();
     ElapsedTime runtime = new ElapsedTime();
@@ -49,9 +49,11 @@ public class Red2Place1 extends AutoPull {
 
     @Override public void runOpMode() throws InterruptedException {
         robot.init(hardwareMap, true);
+        robot.dumperColor.enableLed(true);
+
         RobotLog.ii("5040MSG","Robot Inited");
 
-        //robot.grabber.setPower(0.75);
+        robot.grabber.setPower(0.6);
         RobotLog.ii("5040MSG","Grabber set power");
         //robot.grabber.setTargetPosition(robot.GRABBER_AUTOPOS);
 
@@ -98,108 +100,200 @@ public class Red2Place1 extends AutoPull {
 
         switch (choosen) {
             case (1):
-                target = 23;
+                target = 44.5;
                 break;
             case (2):
-                target = 31.5;
+                target = 52;
                 break;
             case (3):
-                target = 37;
+                target = 60;
                 break;
             default:
-                target = 31.5;
+                target = 52;
                 break;
         }
+
+        /*int glyphColor1;
+        //brown    1 is brown 2 is gray 0 is none
+        if(robot.dumperColor.alpha() < 20) {
+            glyphColor1 = 1;
+        }
+        else {
+            glyphColor1 = 2;
+        }*/
 
         telemetry.addData("VuMark", "%s visible", choosen);
         telemetry.update();
 
-        robot.claw1.setPosition(0.5);
-        robot.claw2.setPosition(0.5);
+        robot.claw1.setPosition(0.64);
+        robot.claw2.setPosition(0.36);
 
         JewelKnock(robot,"red");
+
+
+
         DriveFor(robot,0.3,0.0,0.0,0.0);
         if(robot.jknock.getPosition() != robot.JKUP) {robot.jknock.setPosition(robot.JKUP);}
         robot.wheelie.setPower(-1);
-        DriveFor(robot,0.8,-1.0,0.0,0.0);
+        DriveFor(robot,1.1,-1.0,0.0,0.0);
         robot.wheelie.setPower(0);
-        DriveFor(robot,0.5,-0.4,0.0,0.0);
-        DriveFor(robot,0.5,0.4,0.0,0.0);
-        DriveFor(robot,0.3,0.0,0.0,0.0);
 
-        //DriveFor(robot,0.3,0,0,0);
+        DriveFor(robot,1,0,0,1);
         //RotateTo0(robot,0, startG, startG2);
-        rotateTo(robot,0,0);
-        DriveFor(robot,0.3,0.0,0.0,0.0);
-
-        DriveFor(robot, 0.4,0,1,0);
-        DriveFor(robot,1.0,-1,0,0);
-        DriveFor(robot,0.55,0.36,0,0);
+        rotateTo(robot, -90,0);
+        robot.grabber.setTargetPosition(0);
+        DriveFor(robot,0.2,0,0,0);
+        robot.glyphStop.setPosition(0.8);
+        DriveFor(robot,1.5,1,0,0);
+        robot.claw1.setPosition(0.5);
+        robot.claw2.setPosition(0.5);
         DriveFor(robot,0.3,0,0,0);
+        DriveFor(robot, 1,-1,0,0);
+
+
+        //Shaking off glyph
+
+        //DriveFor(robot,0.3,0,0,1);
+        //DriveFor(robot,0.3,0,0,-1);
+        robot.glyphStop.setPosition(0.1);
+        robot.grabber.setPower(0.4);
+        robot.grabber.setTargetPosition(400);
+        rotateTo(robot,-90,0);
+        DriveFor(robot, 1.0,-1,0,0);
+        DriveFor(robot,0.2,1,0,0);
 
         telemetry.addLine("Lineup 1 Complete");
         telemetry.update();
 
-        boolean dis2 = false;
+        boolean dis2 = false, there = false;
         int count = 0;
         runtime.reset();
-        double speed = 0.285;
+        double speed = 0.35;
         if(choosen == 2){
             speed = 0.25;
         }
-        while (dis2 == false && runtime2.seconds() < 23 && opModeIsActive()) {
+        while (dis2 == false && runtime2.seconds() < 17 && opModeIsActive()) {
             double distanceLeft = ((robot.ultra_left.getVoltage() / 5) * 512) + 2.5;// robot.ultra_right.getDistance(DistanceUnit.CM);
             telemetry.addData("Left", distanceLeft);
             telemetry.update();
 
-            if (distanceLeft > target+0.3) {
+            if (distanceLeft > target+0.4) {
                 onmiDrive(robot, speed, 0.0, 0.0);
+                there = true;
             }
-            else if (distanceLeft < target-0.3) {
+            else if (distanceLeft < target-0.4) {
                 onmiDrive(robot,-speed,0.0,0.0);
+                if(there == true) {
+                    speed = 0.25;
+                }
             }
             else {
                 if(count == 1) {
-                    speed = 0.25;
+                    speed = 0.3;
                 }
                 onmiDrive(robot,0.0, 0.0, 0.0);
                 DriveFor(robot,0.3,0,0,0);
-                if(count == 2) {
-                    rotateTo(robot, 0, 0);
+                if(count == 1) {
+                    rotateTo(robot, -90, 0);
                     DriveFor(robot, 0.3, 0, 0, 0);
                 }
-                if(count == 3) {
+                else if(count == 2){
                     dis2 = true;
                 }
                 count ++;
             }
         }
         onmiDrive(robot,0.0, 0.0, 0.0);
-        DriveFor(robot,0.6,-1,0,0);
+        //rotateTo(robot,-90,0);
+        DriveFor(robot,0.4,-1,0,0);
         DriveFor(robot,0.3,0,0,0);
 
         telemetry.addLine("Lineup 2 Complete");
         telemetry.update();
 
-        robot.dumper.setPower(0.4);
+        robot.dumper.setPower(0.6);
         runtime.reset();
-        while (robot.dumper.getCurrentPosition() <= 470 && opModeIsActive() && runtime2.seconds() < 28 && runtime.seconds() < 2.0) {
+        while (robot.dumper.getCurrentPosition() <= 470 && opModeIsActive() && runtime2.seconds() < 28 && runtime.seconds() < 2) {
             robot.dumper.setTargetPosition(480);
-            //onmiDrive(robot, 0,.26,0);
+            //onmiDrive(robot, 0,.28,0);
         }
         DriveFor(robot,0.5, 0.4, 0.0, 0.0);
 
+
+        onmiDrive(robot,0,0,0);
         while (robot.dumper.getCurrentPosition() >= 5 && opModeIsActive()) {
             robot.dumper.setTargetPosition(0);
         }
 
-        if(runtime2.seconds() < 28) {
-            DriveFor(robot, 1.0, -0.8, 0.0, 0.0);
-            DriveFor(robot, 0.5, 0.5, 0.0, 0.0);
-        }
-        //robot.claw1.setPosition(0.3);
-        //robot.claw2.setPosition(0.7);
-        DriveFor(robot,1.0, 0.0, 0.0, 0.0);
+        robot.grabber.setPower(0.6);
+        robot.grabber.setTargetPosition(520);
+        DriveFor(robot,0.4,0,0,0);
+        robot.claw1.setPosition(0.64);
+        robot.claw2.setPosition(0.36);
+        DriveFor(robot,0.3,0,0,0);
+        robot.grabber.setTargetPosition(robot.GRABBER_AUTOPOS);
+        DriveFor(robot,0.3,0,0,0);
 
+        boolean dump = false;
+        DriveFor(robot,0.3,0,0,0);
+        //telemetry.addData("DumperColor", robot.dumperColor.alpha());
+        if(choosen != 1 && choosen != 3) {
+
+            DriveFor(robot,0.3, -1,0,0);
+            DriveFor(robot,0.2, 1,0,0);
+            DriveFor(robot,0.32, 0,1,0);
+            dump = true;
+
+            /*int glyphColor2;
+            //brown    1 is brown 2 is gray 0 is none
+            if(robot.dumperColor.alpha() < 20) {
+                glyphColor2 = 1;
+                telemetry.addLine("brown");
+            }
+            else if(robot.dumperColor.alpha() < 10){
+                dump = false;
+                glyphColor2 = 0;
+            }
+            else {
+                telemetry.addLine("gray");
+                glyphColor2 = 2;
+            }
+            if(glyphColor1 != glyphColor2) {
+                dump = true;
+            }
+            else if(glyphColor2 != 0) {
+                DriveFor(robot,0.4,-1,0,0);
+                //DriveFor(robot,0.2,1,0,0);
+                DriveFor(robot,0.4,0,1,0);
+                dump = true;
+            }
+            telemetry.update();*/
+        }
+        else {
+            dump = true;
+        }
+
+        DriveFor(robot,0.4,-1,0,0);
+
+        if(dump == true) {
+            runtime.reset();
+            while (robot.dumper.getCurrentPosition() <= 470 && opModeIsActive() && runtime2.seconds() < 28 && runtime.seconds() < 2) {
+                robot.dumper.setTargetPosition(480);
+                //onmiDrive(robot, 0,.3,0);
+            }
+            //onmiDrive(robot,0,0,0);
+            DriveFor(robot,0.4, 0.4, 0.0, 0.0);
+
+            while (robot.dumper.getCurrentPosition() >= 5 && opModeIsActive()) {
+                robot.dumper.setTargetPosition(0);
+            }
+        }
+
+
+        if(runtime2.seconds() < 28) {
+            DriveFor(robot, 1.0, -1, 0.0, 0.0);
+            //DriveFor(robot, 0.5, 0.5, 0.0, 0.0);
+        }
+        DriveFor(robot,0.3, 1, 0.0, 0.0);
     }
 }
