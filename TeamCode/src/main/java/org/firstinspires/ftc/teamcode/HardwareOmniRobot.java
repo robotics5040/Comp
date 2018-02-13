@@ -41,7 +41,7 @@ public class HardwareOmniRobot
 
     ModernRoboticsI2cRangeSensor ultra_backMR, ultra_backMR2;
 
-    public final int GRABBER_AUTOPOS = 430;
+    public final int GRABBER_AUTOPOS = 440;
     public final double JKUP = 0.8;
 
     /* Public OpMode members. */
@@ -123,8 +123,8 @@ public class HardwareOmniRobot
 
         relicMotor = hwMap.dcMotor.get("relic_motor");
         //relicMotor.setDirection(DcMotor.Direction.REVERSE);
-        relicMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        relicMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        //relicMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        //relicMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         relicWrist = hwMap.get(Servo.class, "relic_wrist");
         relicClaw = hwMap.get(Servo.class, "relic_claw");
         relicStopper = hwMap.get(Servo.class, "extension_stopper");
@@ -167,18 +167,20 @@ public class HardwareOmniRobot
         wheelie.setPower(0);
         jknock.setPosition(0.8);
         claw1.setPosition(1.0);
-        claw2.setPosition(0.0);
+        claw2.setPosition(0.1);
         jewelGrab.setPosition(0.19);
         dumper.setPower(0);
         relicClaw.setPosition(0.5);
         glyphStop.setPosition(0.1);
-        relicWrist.setPosition(0.94);
+        relicWrist.setPosition(0.96);
         relicStopper.setPosition(0.96);
         flexServo.setPosition(0.196);        //out to 90 -- 0.82
         RobotLog.ii("5040MSGHW", "Everything Initialized Correctly");
 
 
         if(rungyro == true) {
+            //grabber.setPower(0.4);
+
             BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
             parameters.angleUnit           = BNO055IMU.AngleUnit.DEGREES;
             parameters.accelUnit           = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
@@ -244,14 +246,14 @@ public class HardwareOmniRobot
             rotat = 1;
         }
         else {
-            rotat = 1.8;
+            rotat = 1.4;
         }
 
         try {
-            leftMotor1.setPower(limit(((forward - sideways)/rotat) + (-.25 * rotation)));
-            leftMotor2.setPower(limit(((forward + sideways)/rotat) + (-.25 * rotation)));
-            rightMotor1.setPower(limit(((-forward - sideways)/rotat) + (-.25 * rotation)));
-            rightMotor2.setPower(limit(((-forward + sideways)/rotat) + (-.25 * rotation)));
+            leftMotor1.setPower(limit(((forward - sideways)/rotat) + (-.3 * rotation)));
+            leftMotor2.setPower(limit(((forward + sideways)/rotat) + (-.3 * rotation)));
+            rightMotor1.setPower(limit(((-forward - sideways)/rotat) + (-.3 * rotation)));
+            rightMotor2.setPower(limit(((-forward + sideways)/rotat) + (-.3 * rotation)));
         } catch (Exception e) {
             RobotLog.ee(MESSAGETAG, e.getStackTrace().toString());
         }

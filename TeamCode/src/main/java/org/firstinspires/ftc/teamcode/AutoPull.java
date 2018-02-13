@@ -153,45 +153,6 @@ public class AutoPull extends LinearOpMode {
     }
 
     //rotates to degree. goes from -180
-    public void RotateTo(HardwareOmniRobot robot, int degrees, int offset) {
-        robot.leftMotor1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        robot.leftMotor2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        robot.rightMotor1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        robot.rightMotor2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
-        double p = 0.02;
-        double i = 0.01;
-        double d = 0.000;
-
-        PID pid = new PID(p, i, d);
-        pid.setSetPoint(degrees);
-        runtime.reset();
-        while(opModeIsActive() && runtime.seconds() < 5){
-            double heading = robot.imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).firstAngle + offset;
-
-            double power = pid.update(robot.leftMotor1, heading);
-            power = Range.clip(power, -1.0, 1.0);
-
-            robot.onmiDrive(0.0, 0.0, power);
-
-            if(Math.abs(heading - degrees) < 0.5){
-                break;
-            }
-
-            telemetry.addData("Power: ", power);
-            telemetry.addData("Heading: ", robot.imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).firstAngle + offset);
-            telemetry.addData("Error: ", Math.abs(heading - degrees));
-            telemetry.addData("calibrated? gyro: ", robot.imu.isGyroCalibrated());
-            telemetry.update();
-        }
-        telemetry.addLine("Done!");
-        robot.onmiDrive(0.0, 0.0, 0);
-
-        robot.leftMotor1.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        robot.leftMotor2.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        robot.rightMotor1.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        robot.rightMotor2.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-    }
 
     public void rotateBy(HardwareOmniRobot robot, int degrees,int gyro){
         float heading = robot.gyro.getHeading()-gyro;
