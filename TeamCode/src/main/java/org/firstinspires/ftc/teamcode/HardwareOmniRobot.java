@@ -172,7 +172,7 @@ public class HardwareOmniRobot
         dumper.setPower(0);
         relicClaw.setPosition(0.5);
         glyphStop.setPosition(0.1);
-        relicWrist.setPosition(0.96);
+        relicWrist.setPosition(0.98);
         relicStopper.setPosition(0.96);
         flexServo.setPosition(0.196);        //out to 90 -- 0.82
         RobotLog.ii("5040MSGHW", "Everything Initialized Correctly");
@@ -203,7 +203,7 @@ public class HardwareOmniRobot
             }
 
             //Move the claw back to a semi-open position
-            claw2.setPosition(0.1);
+            claw2.setPosition(0);
             //relicClaw.setPosition(0.35);
             //The robot is now initialized within 18 inches!
         }
