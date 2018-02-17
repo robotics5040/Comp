@@ -357,8 +357,8 @@ public class OmniBot_Iterative2 extends OpMode{
         // OLD NUMBERS -- closed - .76,.24 -- partway - .6,.4
         //closes claws
         if (x_button == true || run2 == true) {
-            robot.claw1.setPosition(0.51);
-            robot.claw2.setPosition(0.49);
+            robot.claw1.setPosition(0.52);
+            robot.claw2.setPosition(0.48);
         }
         //all the way open
         else if(y_button == true) {

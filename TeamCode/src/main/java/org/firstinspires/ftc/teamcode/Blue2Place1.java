@@ -101,16 +101,16 @@ public class Blue2Place1 extends AutoPull {
 
         switch (choosen) {
             case (1):
-                target = 22;
+                target = 23;
                 break;
             case (2):
-                target = 29;
+                target = 30;
                 break;
             case (3):
-                target = 37;
+                target = 36.5;
                 break;
             default:
-                target = 29;
+                target = 30;
                 break;
         }
 
