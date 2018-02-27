@@ -102,6 +102,15 @@ public class OmniBot_Iterative2 extends OpMode{
     public void start() {
         robot.grabber.setPower(0.6);
         robot.dumper.setPower(0.5);
+        robot.jknock.setPosition(0.8);
+        robot.claw1.setPosition(1.0);
+        robot.claw2.setPosition(0.1);
+        robot.jewelGrab.setPosition(0.19);
+        robot.relicClaw.setPosition(0.5);
+        robot.glyphStop.setPosition(0.1);
+        robot.relicWrist.setPosition(0.98);
+        robot.relicStopper.setPosition(0.96);
+        robot.flexServo.setPosition(0.196);
     }
 
     /*

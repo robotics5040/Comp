@@ -165,21 +165,22 @@ public class HardwareOmniRobot
         rightMotor2.setPower(0);
         RobotLog.ii("5040MSGHW","Drive Train setPower");
         wheelie.setPower(0);
-        jknock.setPosition(0.8);
-        claw1.setPosition(1.0);
-        claw2.setPosition(0.1);
-        jewelGrab.setPosition(0.19);
         dumper.setPower(0);
-        relicClaw.setPosition(0.5);
-        glyphStop.setPosition(0.1);
-        relicWrist.setPosition(0.98);
-        relicStopper.setPosition(0.96);
-        flexServo.setPosition(0.196);        //out to 90 -- 0.82
+               //out to 90 -- 0.82
         RobotLog.ii("5040MSGHW", "Everything Initialized Correctly");
 
 
         if(rungyro == true) {
             //grabber.setPower(0.4);
+            jknock.setPosition(0.8);
+            claw1.setPosition(1.0);
+            claw2.setPosition(0.1);
+            jewelGrab.setPosition(0.19);
+            relicClaw.setPosition(0.5);
+            glyphStop.setPosition(0.1);
+            relicWrist.setPosition(0.98);
+            relicStopper.setPosition(0.96);
+            flexServo.setPosition(0.196);
 
             BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
             parameters.angleUnit           = BNO055IMU.AngleUnit.DEGREES;
