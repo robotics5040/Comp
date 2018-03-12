@@ -64,14 +64,14 @@ public class AutoPull extends LinearOpMode {
     //Jewel knocking off code - gets called from the jewel code
     public void TurnLeft(HardwareOmniRobot robot){
         telemetry.addLine("Left");
-        //telemetry.update();
+        telemetry.update();
         DriveFor(robot,0.2, 0.0, 0.0, -1);
         robot.jknock.setPosition(0.7);
         DriveFor(robot,0.3, 0.0, 0.0, 1);
     }
     public void TurnRight(HardwareOmniRobot robot){
         telemetry.addLine("Right");
-        //telemetry.update();
+        telemetry.update();
         DriveFor(robot,0.2, 0.0, 0.0, 1);
         robot.jknock.setPosition(0.7);
         DriveFor(robot,0.3, 0.0, 0.0, -1);
@@ -94,7 +94,7 @@ public class AutoPull extends LinearOpMode {
         telemetry.addData("Color 1r", color1r);
         telemetry.addData("Color 2b", color2b);
         telemetry.addData("Color 2r", color2r);
-        //telemetry.update();
+        telemetry.update();
 
         while (opModeIsActive() && decided == false && runtime.seconds() < 1) {
             if (color1r < 2 && color1b< 2 && color2r < 2 && color2b < 2) {
@@ -124,35 +124,34 @@ public class AutoPull extends LinearOpMode {
         }
         robot.jkcolor.enableLed(false);
         robot.jkcolor2.enableLed(false);
-        telemetry.update();
         if(robot.jknock.getPosition() != robot.JKUP) {robot.jknock.setPosition(robot.JKUP);}
     }
 
-    public void rotateTo(HardwareOmniRobot robot,int degrees,int gyro) {
-        float heading = robot.imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).firstAngle+gyro;//getGyro(robot) - gyro;
-        double speed = 0.35;
+    public void rotateTo(HardwareOmniRobot robot,float degrees,float potent) {
+        float heading = robot.imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).firstAngle;//getGyro(robot) - gyro;
+        double speed = 0.4;
         boolean go = false;
+        degrees += potent;
 
         runtime.reset();
         while (heading != degrees && opModeIsActive() && runtime.seconds() < 1.5) {
             telemetry.addData("HEADING", heading);
+            telemetry.addData("Degrees", degrees);
             telemetry.addData("speed", speed);
             telemetry.update();
-            heading = robot.imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).firstAngle+gyro;//robot.gyro.getHeading() - gyro;
+            heading = robot.imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).firstAngle;//robot.gyro.getHeading() - gyro;
             if (degrees-0.5< heading) {
                 onmiDrive(robot, 0.0, 0.0, -speed);
                 go = true;
             } else if (degrees+0.5 > heading) {
                 onmiDrive(robot, 0.0, 0.0, speed);
-                if (speed > 0.3 && go == true) {
+                if (speed > 0.35 && go == true) {
                     speed -= 0.01;
                 }
             }
         }
         onmiDrive(robot, 0.0, 0.0, 0.0);
     }
-
-    //rotates to degree. goes from -180
 
     public void rotateBy(HardwareOmniRobot robot, int degrees,int gyro){
         float heading = robot.gyro.getHeading()-gyro;
@@ -219,17 +218,6 @@ public class AutoPull extends LinearOpMode {
         }
 
         return choosen;
-    }
-
-    public int getColumnNum(HardwareOmniRobot robot){
-
-        flexCurrent = robot.flex.getVoltage();
-
-        if (flexPrevious - TOLERANCE > flexCurrent) {
-            columnNum++;
-        }
-        flexPrevious = flexCurrent;
-        return columnNum;
     }
 }
 

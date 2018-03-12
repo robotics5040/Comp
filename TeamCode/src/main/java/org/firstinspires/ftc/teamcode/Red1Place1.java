@@ -98,16 +98,16 @@ public class Red1Place1 extends AutoPull {
 
         switch (choosen) {
             case (1):
-                target = 45;
+                target = 46;
                 break;
             case (2):
-                target = 52.5;
+                target = 52;
                 break;
             case (3):
                 target = 60;
                 break;
             default:
-                target = 52.5;
+                target = 52;
                 break;
         }
 
@@ -116,6 +116,8 @@ public class Red1Place1 extends AutoPull {
 
         robot.claw1.setPosition(0.5);
         robot.claw2.setPosition(0.5);
+
+        robot.grabber.setTargetPosition(350);
 
         JewelKnock(robot,"red");
         DriveFor(robot,0.3,0.0,0.0,0.0);
@@ -141,9 +143,6 @@ public class Red1Place1 extends AutoPull {
         int count = 0;
         runtime.reset();
         double speed = 0.275;
-        if(choosen == 2){
-            speed = 0.25;
-        }
         while (dis2 == false && runtime2.seconds() < 23 && opModeIsActive()) {
             double distanceLeft = ((robot.ultra_left.getVoltage() / 5) * 512) + 2.5;// robot.ultra_right.getDistance(DistanceUnit.CM);
             telemetry.addData("Left", distanceLeft);

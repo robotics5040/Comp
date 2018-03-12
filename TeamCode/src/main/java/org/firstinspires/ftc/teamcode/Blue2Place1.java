@@ -101,28 +101,26 @@ public class Blue2Place1 extends AutoPull {
 
         switch (choosen) {
             case (1):
-                target = 23;
+                target = 21.5;
                 break;
             case (2):
-                target = 30;
+                target = 28;
                 break;
             case (3):
-                target = 36.5;
+                target = 36;
                 break;
             default:
-                target = 30;
+                target = 28;
                 break;
         }
 
         telemetry.addData("VuMark", "%s visible", choosen);
         telemetry.update();
 
-        robot.claw1.setPosition(0.5);
-        robot.claw2.setPosition(0.5);
-
         JewelKnock(robot,"blue");
         DriveFor(robot,0.3,0.0,0.0,0.0);
         if(robot.jknock.getPosition() != robot.JKUP) {robot.jknock.setPosition(robot.JKUP);}
+
         robot.wheelie.setPower(1);
         DriveFor(robot,0.8,1.0,0.0,0.0);
         robot.wheelie.setPower(0);
@@ -140,6 +138,11 @@ public class Blue2Place1 extends AutoPull {
         DriveFor(robot,0.55,0.36,0,0);
         DriveFor(robot,0.3,0,0,0);
 
+        robot.claw1.setPosition(0.5);
+        robot.claw2.setPosition(0.5);
+
+        robot.grabber.setTargetPosition(350);
+
         telemetry.addLine("Lineup 1 Complete");
         telemetry.update();
 
@@ -147,9 +150,7 @@ public class Blue2Place1 extends AutoPull {
         int count = 0;
         runtime.reset();
         double speed = 0.285;
-        if(choosen == 2){
-            speed = 0.25;
-        }
+
         while (dis2 == false && runtime2.seconds() < 23 && opModeIsActive()) {
             double distanceRight = ((robot.ultra_right.getVoltage() / 5) * 512) + 2.5;// robot.ultra_right.getDistance(DistanceUnit.CM);
             telemetry.addData("Right", distanceRight);

@@ -19,7 +19,6 @@ import org.firstinspires.ftc.robotcore.external.navigation.Position;
 import org.firstinspires.ftc.robotcore.external.navigation.Velocity;
 
 import java.text.DecimalFormat;
-
 /**
  * This is NOT an opmode.
  *
@@ -34,7 +33,7 @@ public class HardwareOmniRobot
 {
     ElapsedTime runtime = new ElapsedTime();
 
-    ColorSensor jkcolor, jkcolor2, dumperColor;
+    ColorSensor jkcolor, jkcolor2;
 
     ModernRoboticsI2cGyro gyro, gyro2;
     BNO055IMU imu;
@@ -45,15 +44,21 @@ public class HardwareOmniRobot
     public final double JKUP = 0.8;
 
     /* Public OpMode members. */
-    public AnalogInput flex = null;
+    //ultrasonics
     public AnalogInput ultra_left = null;
     public AnalogInput ultra_back = null;
     public AnalogInput ultra_right = null;
+
+    //potentiometer
+    public AnalogInput potentiometer =null;
+
+    //drive train motors
     public DcMotor leftMotor1 = null;
     public DcMotor leftMotor2 = null;
     public DcMotor rightMotor1 = null;
     public DcMotor rightMotor2 = null;
 
+    //relic stuff
     public DcMotor relicMotor = null;
     public Servo relicWrist   = null;
     public Servo relicClaw    = null;
@@ -112,7 +117,6 @@ public class HardwareOmniRobot
         flexServo = hwMap.servo.get("flex");
         jkcolor = hwMap.get(ColorSensor.class, "color_sense");
         jkcolor2 = hwMap.get(ColorSensor.class, "color");
-        dumperColor = hwMap.get(ColorSensor.class, "dumperColor");
         RobotLog.ii("5040MSGHW","Everything but ultras gotten");
 
         jkcolor.setI2cAddress(I2cAddr.create8bit(0x28));
@@ -144,7 +148,7 @@ public class HardwareOmniRobot
         ultra_back = hwMap.analogInput.get("ultra_back");
         ultra_right = hwMap.analogInput.get("ultra_right");
 
-        flex = hwMap.analogInput.get("flx");
+        potentiometer = hwMap.analogInput.get("potentiometer");
 
         leftMotor1.setDirection(DcMotor.Direction.REVERSE); // Set to REVERSE if using AndyMark motors
         leftMotor2.setDirection(DcMotor.Direction.REVERSE); // Set to REVERSE if using AndyMark motors
@@ -166,7 +170,7 @@ public class HardwareOmniRobot
         RobotLog.ii("5040MSGHW","Drive Train setPower");
         wheelie.setPower(0);
         dumper.setPower(0);
-               //out to 90 -- 0.82
+        //out to 90 -- 0.82
         RobotLog.ii("5040MSGHW", "Everything Initialized Correctly");
 
 
@@ -178,8 +182,8 @@ public class HardwareOmniRobot
             jewelGrab.setPosition(0.19);
             relicClaw.setPosition(0.5);
             glyphStop.setPosition(0.1);
-            relicWrist.setPosition(0.98);
-            relicStopper.setPosition(0.96);
+            relicWrist.setPosition(0.05);
+            relicStopper.setPosition(0);
             flexServo.setPosition(0.196);
 
             BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
@@ -260,77 +264,7 @@ public class HardwareOmniRobot
         }
     }
 
-    public void relicArm (double ljoystick, double rjoystick, boolean a){
-        int relicMotorPosition = relicMotor.getCurrentPosition();
-        int newRelicMotorPosition = relicMotorPosition;
 
-        double rwCurrent = relicWrist.getPosition(), rwGoal = rwCurrent;
-
-        double power = 0.5;
-        final int RELIC_OUT = 4800; // Minimum Value to Prevent Over Extension
-        final int RELIC_IN  = 0;
-
-        if(ljoystick > 0.1){
-            newRelicMotorPosition = RELIC_OUT;
-        }else if(ljoystick < -0.1){
-            newRelicMotorPosition = RELIC_IN;
-        }else{
-            newRelicMotorPosition = relicMotorPosition;
-        }
-
-        if(rjoystick > 0.1){
-            rwGoal = rwCurrent += 0.1;
-        }else if(rjoystick < -0.1){
-            rwGoal = rwCurrent -= 0.1;
-        }
-        if(rwGoal > 1.0){
-            rwGoal = 1.0;
-        }else if(rwGoal < 0.0){
-            rwGoal = 0.0;
-        }
-
-        relicWrist.setPosition(rwGoal);
-
-        /*
-        if(rjoystick > -0.1){
-            if(rwCurrent + 0.05 <= 1.0){
-                rwGoal = rwCurrent + 0.05;
-            }
-        }else if(rjoystick > 0.1) {
-            if (rwCurrent - 0.05 >= 0) {
-                rwGoal = rwCurrent - 0.05;
-            }
-        }
-        */
-
-        relicMotor.setTargetPosition(newRelicMotorPosition);
-        relicMotorPosition = relicMotor.getCurrentPosition();
-        power = Math.abs(ljoystick);
-
-        if(power < 0.4){
-            power = 0.4;
-        }
-
-        //relicMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        //telemetry.addData("Right Joystick Value", joystick);
-        //telemetry.addData("Motor Target Position", newRelicMotorPosition);
-        //telemetry.addData("Motor Power Value", power);
-
-        /*if(relicMotor.isBusy()) {
-            relicMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            relicMotor.setPower(power);
-        }else{
-            //relicMotor.setPower();
-            relicMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            relicMotor.setTargetPosition(relicMotor.getCurrentPosition());
-        }*/
-
-        relicMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        relicMotor.setPower(power);
-
-        //relicWrist.setPosition(rwGoal);
-        //waitForTick(50);
-    }
 
 
 
