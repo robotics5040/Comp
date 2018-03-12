@@ -74,7 +74,7 @@ public class RelicDeliverySystem {
         }
 
         //Make sure that the new position isn't out of bounds
-        Range.clip(rwGoal, 0.0, 1.0);
+        Range.clip(rwGoal, 0.4, 1.0);
 
         //Apply the new position
         robot.relicWrist.setPosition(rwGoal);
