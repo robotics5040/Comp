@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.Range;
 
 /**
@@ -34,10 +36,10 @@ public class RelicDeliverySystem {
         //Deactivates the relic stopper and moves the slide forward based on the joystick
         if (joystick < -0.1) {
             robot.relicStopper.setPosition(1);
-            power = -1.0;
+            power = 1.0;
         } else if (joystick > 0.1) {
             robot.relicStopper.setPosition(1);
-            power = 1.0;
+            power = -1.0;
         }
 
         //Set the power to the slide
@@ -74,7 +76,10 @@ public class RelicDeliverySystem {
         }
 
         //Make sure that the new position isn't out of bounds
-        Range.clip(rwGoal, 0.4, 1.0);
+        Range.clip(rwGoal, 0.02, 1.0);
+        if(rwGoal < 0.02) {
+            rwGoal = 0.02;
+        }
 
         //Apply the new position
         robot.relicWrist.setPosition(rwGoal);

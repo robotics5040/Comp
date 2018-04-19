@@ -11,6 +11,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.GyroSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.I2cAddr;
+import com.qualcomm.robotcore.hardware.OpticalDistanceSensor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.RobotLog;
@@ -34,6 +35,7 @@ public class HardwareOmniRobot
     ElapsedTime runtime = new ElapsedTime();
 
     ColorSensor jkcolor, jkcolor2;
+    OpticalDistanceSensor glyphDetect;
 
     ModernRoboticsI2cGyro gyro, gyro2;
     BNO055IMU imu;
@@ -41,7 +43,7 @@ public class HardwareOmniRobot
     ModernRoboticsI2cRangeSensor ultra_backMR, ultra_backMR2;
 
     public final int GRABBER_AUTOPOS = 440;
-    public final double JKUP = 0.8;
+    public final double JKUP = 0.8, JKDOWN = 0.12;
 
     /* Public OpMode members. */
     //ultrasonics
@@ -64,14 +66,13 @@ public class HardwareOmniRobot
     public Servo relicClaw    = null;
     public Servo relicStopper = null;
 
+    public Servo glyphRake = null;
     public DcMotor wheelie = null;
     public DcMotor grabber = null;
     public Servo jknock = null;
     public DcMotor dumper = null;
     public Servo claw1 = null;
     public Servo claw2 = null;
-    public Servo jewelGrab = null;
-    public Servo flexServo = null;
     public Servo glyphStop = null;
     private final double MIN_MOTOR_OUTPUT_VALUE = -1.0;
     private final double MAX_MOTOR_OUTPUT_VALUE = 1.0;
@@ -110,13 +111,13 @@ public class HardwareOmniRobot
         wheelie = hwMap.dcMotor.get("wheelie");
         grabber = hwMap.dcMotor.get("grabber");
         dumper = hwMap.dcMotor.get("dumper");
-        jewelGrab = hwMap.servo.get("JewelGrab");
         claw1 = hwMap.servo.get("claw_1");
         claw2 = hwMap.servo.get("claw_2");
         jknock = hwMap.servo.get("jknock");
-        flexServo = hwMap.servo.get("flex");
+        glyphRake = hwMap.servo.get("glyphRake");
         jkcolor = hwMap.get(ColorSensor.class, "color_sense");
         jkcolor2 = hwMap.get(ColorSensor.class, "color");
+        glyphDetect = hwMap.get(OpticalDistanceSensor.class, "glyph_detect");
         RobotLog.ii("5040MSGHW","Everything but ultras gotten");
 
         jkcolor.setI2cAddress(I2cAddr.create8bit(0x28));
@@ -178,13 +179,12 @@ public class HardwareOmniRobot
             //grabber.setPower(0.4);
             jknock.setPosition(0.8);
             claw1.setPosition(1.0);
-            claw2.setPosition(0.1);
-            jewelGrab.setPosition(0.19);
+            //claw2.setPosition(0.1);
             relicClaw.setPosition(0.5);
-            glyphStop.setPosition(0.1);
-            relicWrist.setPosition(0.05);
+            glyphStop.setPosition(0);
+            relicWrist.setPosition(0.02);
             relicStopper.setPosition(0);
-            flexServo.setPosition(0.196);
+            glyphRake.setPosition(0);
 
             BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
             parameters.angleUnit           = BNO055IMU.AngleUnit.DEGREES;
@@ -208,7 +208,7 @@ public class HardwareOmniRobot
             }
 
             //Move the claw back to a semi-open position
-            claw2.setPosition(0);
+            claw2.setPosition(0.5);
             //relicClaw.setPosition(0.35);
             //The robot is now initialized within 18 inches!
         }
