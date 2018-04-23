@@ -362,6 +362,7 @@ public class OmniBot_Iterative extends OpMode{
             }
         }
         else if (left_bumper2 == true) {
+            robot.glyphStop.setPosition(0.1);
             //robot.grabber.setPower(0.6);
             if(robot.grabber.getCurrentPosition() >= 400) {
                 robot.grabber.setPower(0.3);
@@ -373,6 +374,7 @@ public class OmniBot_Iterative extends OpMode{
 
         }
         else if(left_trigger2) {
+            robot.glyphStop.setPosition(0.1);
             robot.grabber.setPower(0.35);
             //robot.glyphStop.setPosition(0.6);
             robot.grabber.setTargetPosition(350);
@@ -426,7 +428,7 @@ public class OmniBot_Iterative extends OpMode{
         else{
             //robot.glyphStop.setPosition(0.4);
         }*/
-        if(right_trigger1 && left_bumper1 == false && !left_trigger2  && robot.grabber.getCurrentPosition() < 20 && dup2 == false && ddown2 == false && run2 == false) {
+        if(right_trigger1 && left_bumper1 == false && !left_trigger2  && robot.grabber.getCurrentPosition() < 150 && dup2 == false && ddown2 == false && run2 == false) {
             telemetry.addLine("BOP!");
             robot.glyphStop.setPosition(0.55);
         }
@@ -606,7 +608,7 @@ public class OmniBot_Iterative extends OpMode{
         telemetry.addLine("Sensors");
         telemetry.addData("color 1", robot.jkcolor.blue());
         telemetry.addData("color 1", robot.jkcolor2.blue());
-        telemetry.addData("dumper", robot.dumper.getCurrentPosition());
+        telemetry.addData("dumper ODS", robot.glyphDetect.getRawLightDetected());
         telemetry.addData("Ultra Back ", ((robot.ultra_back.getVoltage() / 5) * 512) + 2.5);
         telemetry.addData("Ultra Left ", ((robot.ultra_left.getVoltage() / 5) * 512) + 2.5);
         telemetry.addData("Ultra Right ", ((robot.ultra_right.getVoltage() / 5) * 512) + 2.5);

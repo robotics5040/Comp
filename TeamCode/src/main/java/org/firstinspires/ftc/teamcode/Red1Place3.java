@@ -105,19 +105,18 @@ public class Red1Place3 extends AutoPull {
 
         switch (choosen) {
             case (1):
-                target = 44.5;
+                target = 45.6;
                 break;
             case (2):
                 target = 52;
                 break;
             case (3):
-                target = 60;
+                target = 59.5;
                 break;
             default:
                 target = 52;
                 break;
         }
-
 
         telemetry.addData("VuMark", "%s visible", choosen);
         telemetry.update();
@@ -126,8 +125,6 @@ public class Red1Place3 extends AutoPull {
         robot.claw2.setPosition(0.36);
 
         JewelKnock(robot,"red");
-
-
 
         DriveFor(robot,0.3,0.0,0.0,0.0,true);
         robot.jknock.setPosition(robot.JKUP);
@@ -161,14 +158,14 @@ public class Red1Place3 extends AutoPull {
         boolean dis2 = false;
         int count = 0;
         runtime.reset();
-        double speed = 0.35;
+        double speed = 0.38;
         while (dis2 == false && runtime2.seconds() < 15 && opModeIsActive()) {
             double distanceLeft = ((robot.ultra_left.getVoltage() / 5) * 512) + 2.5;// robot.ultra_left.getDistance(DistanceUnit.CM);
             telemetry.addData("Left", distanceLeft);
             telemetry.update();
 
             if (distanceLeft > target+0.4) {
-                omniDrive(robot,speed, 0.0, 0.0,true);
+                omniDrive(robot, speed, 0.0, 0.0,true);
             }
             else if (distanceLeft < target-0.4) {
                 omniDrive(robot,-speed,0.0,0.0,true);
@@ -196,7 +193,7 @@ public class Red1Place3 extends AutoPull {
         robot.dumper.setPower(0.6);
         dumpGlyph(robot);
 
-
+        //puts second glyph in dumper along with getting reading when there is no glyph for the ODS sensor
         robot.grabber.setPower(1);
         robot.glyphDetect.enableLed(true);
         double noGlyph = robot.glyphDetect.getRawLightDetected();
@@ -215,25 +212,26 @@ public class Red1Place3 extends AutoPull {
         telemetry.addData("glyph?", robot.glyphDetect.getRawLightDetected());
         telemetry.update();
 
-        if(robot.glyphDetect.getRawLightDetected() > noGlyph+1) {
+        if(robot.glyphDetect.getRawLightDetected() > noGlyph+0.5) {
             //telemetry.addData("DumperColor", robot.dumperColor.alpha());
 
             if (choosen == 3) {
-                DriveFor(robot, 0.25, 0, -1, 0, false);
+                DriveFor(robot, 0.4, 0, -1, 0, true);
             }
             else if (choosen == 1) {
-                DriveFor(robot, 0.5, 0, 1, 0, false);
+                DriveFor(robot, 0.6, 0, 1, 0, true);
             }
             else {
-                DriveFor(robot, 0.25, 0, 1, 0, false);
+                DriveFor(robot, 0.3, 0, 1, 0, true);
             }
 
-            DriveFor(robot, 0.4, -1, 0.0, 0.0, false);
+            DriveFor(robot, 0.4, -1, 0, 0, true);
 
             dumpGlyph(robot);
 
             DriveFor(robot, 0.3, -1, 0.0, 0.0, false);
             DriveFor(robot, 0.4, 1, 0.0, 0.0, false);
+
 
             if(choosen == 1 || choosen == 2)
                 DriveFor(robot, 0.3, 0, -1, 0, false);
@@ -247,6 +245,8 @@ public class Red1Place3 extends AutoPull {
             }
         }
 
+        //rotateTo(robot, -90,angle);
+
         robot.grabber.setTargetPosition(0);
         DriveFor(robot,0.2,0,0,0,true);
         robot.glyphStop.setPosition(0.5);
@@ -256,7 +256,7 @@ public class Red1Place3 extends AutoPull {
         DriveFor(robot,0.3,0,0,0,true);
 
         double distanceBack = ((robot.ultra_back.getVoltage() / 5) * 512) + 2.5;
-        while(opModeIsActive() == true && distanceBack > 25) {
+        while(opModeIsActive() == true && distanceBack > 26) {
             distanceBack = ((robot.ultra_back.getVoltage() / 5) * 512) + 2.5;
             omniDrive(robot, 0, -1, 0, false);
         }
@@ -282,22 +282,24 @@ public class Red1Place3 extends AutoPull {
 
                 dumpGlyph(robot);
 
-                DriveFor(robot, 0.3, -1, 0.0, 0.0, false);
-                DriveFor(robot, 0.2, 1, 0.0, 0.0, false);
+                if(runtime2.seconds() > 28) {
+                    DriveFor(robot, 0.3, -1, 0.0, 0.0, false);
+                    DriveFor(robot, 0.2, 1, 0.0, 0.0, false);
+                }
             }
         }
 
         robot.grabber.setTargetPosition(200);
 
         double distanceLeft = ((robot.ultra_left.getVoltage() / 5) * 512) + 2.5;
-        while(opModeIsActive() == true && distanceLeft < 52) {
+        while(opModeIsActive() == true && distanceLeft < 52 && runtime2.seconds() < 29.5) {
             distanceLeft = ((robot.ultra_left.getVoltage() / 5) * 512) + 2.5;
             omniDrive(robot, -.7, 0, 0, true);
         }
         omniDrive(robot,0,0,0,true);
 
         distanceLeft = ((robot.ultra_left.getVoltage() / 5) * 512) + 2.5;
-        while(opModeIsActive() == true && distanceLeft > 52) {
+        while(opModeIsActive() == true && distanceLeft > 52 && runtime2.seconds() < 29.5) {
             distanceLeft = ((robot.ultra_left.getVoltage() / 5) * 512) + 2.5;
             omniDrive(robot, .7, 0, 0, true);
         }
