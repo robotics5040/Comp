@@ -160,7 +160,7 @@ public class Blue2Place2 extends AutoPull {
         boolean dis2 = false, there = false;
         int count = 0;
         runtime.reset();
-        double speed = 0.35;
+        double speed = 0.36;
         while (dis2 == false && runtime2.seconds() < 15 && opModeIsActive()) {
             double distanceRight = ((robot.ultra_right.getVoltage() / 5) * 512) + 2.5;// robot.ultra_right.getDistance(DistanceUnit.CM);
             telemetry.addData("Right", distanceRight);
@@ -237,7 +237,7 @@ public class Blue2Place2 extends AutoPull {
         robot.glyphStop.setPosition(0.5);
 
         DriveFor(robot,1,.8,0,-1,false);
-        robot.claw1.setPosition(0.52);
+        robot.claw1.setPosition(0.55);
         robot.claw2.setPosition(0.48);
         DriveFor(robot,0.3,0,0,0,true);
         DriveFor(robot,1,-1,0,1,false);

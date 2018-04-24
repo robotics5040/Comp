@@ -149,7 +149,7 @@ public class Red1Place2 extends AutoPull {
         DriveFor(robot,0.2,0,0,0,true);
         robot.glyphStop.setPosition(0.5);
         DriveFor(robot,1,1,0,0,false);
-        robot.claw1.setPosition(0.52);
+        robot.claw1.setPosition(0.55);
         robot.claw2.setPosition(0.48);
         DriveFor(robot,0.3,0,0,0,true);
         DriveFor(robot, 0.7,-1,-0.2,0,false);

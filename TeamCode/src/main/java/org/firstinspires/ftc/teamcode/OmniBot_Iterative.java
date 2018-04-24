@@ -164,6 +164,7 @@ public class OmniBot_Iterative extends OpMode{
         boolean a_button1 = gamepad1.a && gamepadMode1 == 0;
         boolean y_button1 = gamepad1.y && gamepadMode1 == 0;
         boolean x_button1 = gamepad1.x && gamepadMode1 == 0;
+        boolean home_button1 = gamepad1.guide;
 
         //Directional Pad Inputs
         boolean dup1    = gamepad1.dpad_up    && gamepadMode1 == 0;
@@ -483,17 +484,23 @@ public class OmniBot_Iterative extends OpMode{
             }
             robot.dumper.setTargetPosition(0);
         }
-
-        //claw controls
+        /*
+         *Claw Controls
+        */
         //closes claws
         if (x_button2 == true || run2 == true) {
-            robot.claw1.setPosition(0.52);
+            robot.claw1.setPosition(0.55);
             robot.claw2.setPosition(0.48);
         }
         //all the way open
         else if(y_button2 == true) {
-            robot.claw1.setPosition(0.7);
-            robot.claw2.setPosition(0.3);
+            robot.claw1.setPosition(0.72);
+            robot.claw2.setPosition(0.28);
+        }
+        //DABBING FOR AT END
+        else if(home_button1 == true) {
+            robot.claw1.setPosition(1);
+            robot.claw2.setPosition(0.58);
         }
         //part way open when not pressing a button
         else {
