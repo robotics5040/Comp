@@ -109,16 +109,16 @@ public class Red2Place2 extends AutoPull {
 
         switch (choosen) {
             case (1):
-                target = 23;
+                target = 22;
                 break;
             case (2):
-                target = 30.5;
+                target = 29;
                 break;
             case (3):
-                target = 38;
+                target = 36;
                 break;
             default:
-                target = 30.5;
+                target = 29;
                 break;
         }
 
@@ -145,15 +145,15 @@ public class Red2Place2 extends AutoPull {
         DriveFor(robot,0.2,1,0,0,false);
         DriveFor(robot,0.3,0,0,0,true);
 
-        robot.claw1.setPosition(0.64);
-        robot.claw2.setPosition(0.36);
+        robot.claw1.setPosition(0.6);
+        robot.claw2.setPosition(0.4);
 
         robot.grabber.setTargetPosition(350+adjustment);
 
         telemetry.addLine("Lineup 1 Complete");
         telemetry.update();
 
-        boolean dis2 = false, there = false;
+        boolean dis2 = false;
         int count = 0;
         runtime.reset();
         double speed = 0.36;
@@ -171,11 +171,12 @@ public class Red2Place2 extends AutoPull {
             else {
                 count++;
                 if(count == 1) {
-                    speed = 0.32;
+                    //speed = 0.32;
                     omniDrive(robot, 0.0, 0.0, 0.0, true);
                     DriveFor(robot, 0.3, 0, 0, 0, true);
                     rotateTo(robot, 0, 0);
-                    //DriveFor(robot, 0.3, 0, 0, 0,true);
+                    DriveFor(robot, 0.3, 0, 0, 0,true);
+                    dis2 = true;
                 }
                 else {
                     omniDrive(robot, 0.0, 0.0, 0.0, true);
@@ -192,30 +193,14 @@ public class Red2Place2 extends AutoPull {
         telemetry.update();
 
         robot.dumper.setPower(0.6);
-        runtime.reset();
-        robot.dumper.setTargetPosition(480);
-        while (robot.dumper.getCurrentPosition() <= 470 && opModeIsActive() && runtime2.seconds() < 28 && runtime.seconds() < 0.5) {
-            robot.dumper.setTargetPosition(480);
-            telemetry.addData("dumper", robot.dumper.getCurrentPosition());
-            telemetry.update();
-            //onmiDrive(robot, 0,.4,0);
-        }
-        DriveFor(robot,0.5, 0.5, 0.0, 0.0,true);
 
-        runtime.reset();
+        dumpGlyph(robot);
 
-        DriveFor(robot,0.5, 0, 0.0, 0.0,true);
-        while (robot.dumper.getCurrentPosition() >= 10 && opModeIsActive() && runtime.seconds() < 1.5) {
-            telemetry.addData("dumper", robot.dumper.getCurrentPosition());
-            telemetry.update();
-            robot.dumper.setTargetPosition(5);
-        }
-
-        DriveFor(robot, 0.3, -1, 0.0, 0.0,false);
-        DriveFor(robot,0.3, 1, 0.0, 0.0,false);
+        DriveFor(robot, 0.3, -1, 0.0, 0.0, false);
+        DriveFor(robot, 0.2, 1, 0.0, 0.0, false);
 
         double distanceLeft = ((robot.ultra_left.getVoltage() / 5) * 512) + 2.5;
-        while(opModeIsActive() == true && distanceLeft < 42) {
+        while(opModeIsActive() == true && distanceLeft < 38) {
             distanceLeft = ((robot.ultra_left.getVoltage() / 5) * 512) + 2.5;
             omniDrive(robot, -1, 0, 0, false);
         }
@@ -228,7 +213,7 @@ public class Red2Place2 extends AutoPull {
         robot.grabber.setTargetPosition(0);
 
         double distanceBack = ((robot.ultra_back.getVoltage() / 5) * 512) + 2.5;
-        while(opModeIsActive() == true && distanceBack < 22) {
+        while(opModeIsActive() == true && distanceBack < 25) {
             distanceBack = ((robot.ultra_back.getVoltage() / 5) * 512) + 2.5;
             omniDrive(robot, 0, 1, 0, false);
         }
@@ -237,8 +222,8 @@ public class Red2Place2 extends AutoPull {
         robot.glyphStop.setPosition(0.5);
 
         DriveFor(robot,1,.8,0,1,false);
-        robot.claw1.setPosition(0.55);
-        robot.claw2.setPosition(0.48);
+        robot.claw1.setPosition(0.48);
+        robot.claw2.setPosition(0.52);
         DriveFor(robot,0.3,0,0,0,true);
         DriveFor(robot,1,-1,0,-1,false);
 
@@ -250,14 +235,14 @@ public class Red2Place2 extends AutoPull {
         DriveFor(robot,0.45,0,0,0,true);
         robot.grabber.setTargetPosition(550+adjustment);
         rotateTo(robot,0,0);
-        robot.claw1.setPosition(0.64);
-        robot.claw2.setPosition(0.36);
+        robot.claw1.setPosition(0.6);
+        robot.claw2.setPosition(0.4);
         DriveFor(robot,0.45,0,0,0,true);
         robot.grabber.setTargetPosition(350+adjustment);
 
 
         distanceBack = ((robot.ultra_back.getVoltage() / 5) * 512) + 2.5;
-        while(opModeIsActive() == true && distanceBack > 21) {
+        while(opModeIsActive() == true && distanceBack > 23) {
             distanceBack = ((robot.ultra_back.getVoltage() / 5) * 512) + 2.5;
             omniDrive(robot,0,-1,0, true);
         }
@@ -266,13 +251,13 @@ public class Red2Place2 extends AutoPull {
         distanceBack = ((robot.ultra_back.getVoltage() / 5) * 512) + 2.5;
         while(opModeIsActive() == true && distanceBack < 18) {
             distanceBack = ((robot.ultra_back.getVoltage() / 5) * 512) + 2.5;
-            omniDrive(robot,0,.7,0,true);
+            omniDrive(robot,0,.4,0,true);
         }
         omniDrive(robot,0,0,0,true);
 
 
         distanceLeft = ((robot.ultra_left.getVoltage() / 5) * 512) + 2.5;
-        while(opModeIsActive() == true && distanceLeft > 40) {
+        while(opModeIsActive() == true && distanceLeft > 35) {
             distanceLeft = ((robot.ultra_left.getVoltage() / 5) * 512) + 2.5;
             omniDrive(robot, 1, 0, 0, true);
         }

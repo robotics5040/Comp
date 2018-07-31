@@ -112,13 +112,13 @@ public class Red2Place1 extends AutoPull {
                 target = 22;
                 break;
             case (2):
-                target = 29.5;
+                target = 29;
                 break;
             case (3):
-                target = 37;
+                target = 36;
                 break;
             default:
-                target = 29.5;
+                target = 29;
                 break;
         }
 
@@ -145,15 +145,15 @@ public class Red2Place1 extends AutoPull {
         DriveFor(robot,0.2,1,0,0,false);
         DriveFor(robot,0.3,0,0,0,true);
 
-        robot.claw1.setPosition(0.5);
-        robot.claw2.setPosition(0.5);
+        robot.claw1.setPosition(0.6);
+        robot.claw2.setPosition(0.4);
 
         robot.grabber.setTargetPosition(350+adjustment);
 
         telemetry.addLine("Lineup 1 Complete");
         telemetry.update();
 
-        boolean dis2 = false, there = false;
+        boolean dis2 = false;
         int count = 0;
         runtime.reset();
         double speed = 0.36;
@@ -164,15 +164,9 @@ public class Red2Place1 extends AutoPull {
 
             if (distanceLeft > target+0.4) {
                 omniDrive(robot, speed, 0.0, 0.0,true);
-                there = true;
-                if(speed < 0.45 && speed > 0.29)
-                    speed -= 0.03;
             }
             else if (distanceLeft < target-0.4) {
                 omniDrive(robot,-speed,0.0,0.0,true);
-                if(there == true && speed > 0.29) {
-                    speed -= 0.03;
-                }
             }
             else {
                 count++;

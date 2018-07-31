@@ -108,16 +108,16 @@ public class Blue1Place2 extends AutoPull {
 
         switch (choosen) {
             case (1):
-                target = 44;
+                target = 45;
                 break;
             case (2):
-                target = 52;
+                target = 52.5;
                 break;
             case (3):
-                target = 59;
+                target = 60;
                 break;
             default:
-                target = 52;
+                target = 52.5;
                 break;
         }
 
@@ -133,8 +133,8 @@ public class Blue1Place2 extends AutoPull {
         telemetry.addData("VuMark", "%s visible", choosen);
         telemetry.update();
 
-        robot.claw1.setPosition(0.64);
-        robot.claw2.setPosition(0.36);
+        robot.claw1.setPosition(0.6);
+        robot.claw2.setPosition(0.4);
 
         JewelKnock(robot,"blue");
 
@@ -151,8 +151,8 @@ public class Blue1Place2 extends AutoPull {
         DriveFor(robot,0.2,0,0,0,true);
         robot.glyphStop.setPosition(0.5);
         DriveFor(robot,1,1,0,0,false);
-        robot.claw1.setPosition(0.55);
-        robot.claw2.setPosition(0.48);
+        robot.claw1.setPosition(0.48);
+        robot.claw2.setPosition(0.52);
         DriveFor(robot,0.3,0,0,0,true);
         DriveFor(robot, 0.7,-1,-0.2,0,false);
         robot.glyphStop.setPosition(0.1);

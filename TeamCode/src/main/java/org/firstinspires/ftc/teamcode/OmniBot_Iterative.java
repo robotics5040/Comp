@@ -126,8 +126,8 @@ public class OmniBot_Iterative extends OpMode{
         robot.grabber.setPower(0.6);
         robot.dumper.setPower(0.5);
         robot.jknock.setPosition(0.8);
-        robot.claw1.setPosition(0.65);
-        robot.claw2.setPosition(0.35);
+        robot.claw1.setPosition(0.6);
+        robot.claw2.setPosition(0.4);
         robot.relicClaw.setPosition(0.6);
         robot.glyphStop.setPosition(0.1);
         robot.relicWrist.setPosition(0.02);
@@ -146,7 +146,7 @@ public class OmniBot_Iterative extends OpMode{
          *   Gamepad 1
          */
         //Joystick Inputs
-        double left_stick_y1  = gamepadMode1 == 0 ? gamepad1.left_stick_y : 0; //Basicly an if statement that
+        double left_stick_y1  = gamepadMode1 == 0 ? gamepad1.left_stick_y : 0; //Basically an if statement that
         double right_stick_y1 = gamepadMode1 == 0 ? gamepad1.right_stick_y : 0;
         //right_trigger1  = gamepad1.right_trigger;//unused
         double left_stick_x1   = gamepad1.left_stick_x;
@@ -489,23 +489,18 @@ public class OmniBot_Iterative extends OpMode{
         */
         //closes claws
         if (x_button2 == true || run2 == true) {
-            robot.claw1.setPosition(0.55);
-            robot.claw2.setPosition(0.48);
+            robot.claw1.setPosition(0.47);
+            robot.claw2.setPosition(0.53);
         }
         //all the way open
         else if(y_button2 == true) {
             robot.claw1.setPosition(0.72);
             robot.claw2.setPosition(0.28);
         }
-        //DABBING FOR AT END
-        else if(home_button1 == true) {
-            robot.claw1.setPosition(1);
-            robot.claw2.setPosition(0.58);
-        }
         //part way open when not pressing a button
         else {
-            robot.claw1.setPosition(0.65);
-            robot.claw2.setPosition(0.35);
+            robot.claw1.setPosition(0.58);
+            robot.claw2.setPosition(0.42);
         }
 
         /*

@@ -112,16 +112,16 @@ public class Blue2Place1 extends AutoPull {
 
         switch (choosen) {
             case (1):
-                target = 21.5;
+                target = 22;
                 break;
             case (2):
-                target = 28;
+                target = 30;
                 break;
             case (3):
-                target = 36;
+                target = 36.5;
                 break;
             default:
-                target = 28;
+                target = 30;
                 break;
         }
 
@@ -149,8 +149,8 @@ public class Blue2Place1 extends AutoPull {
         DriveFor(robot,0.2,1,0,0,false);
         DriveFor(robot,0.3,0,0,0,true);
 
-        robot.claw1.setPosition(0.5);
-        robot.claw2.setPosition(0.5);
+        robot.claw1.setPosition(0.6);
+        robot.claw2.setPosition(0.4);
 
         robot.grabber.setTargetPosition(350+adjustment);
 
